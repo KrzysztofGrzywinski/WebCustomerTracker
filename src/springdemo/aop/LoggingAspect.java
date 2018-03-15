@@ -3,6 +3,7 @@ package springdemo.aop;
 import java.util.logging.Logger;
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -41,5 +42,13 @@ public class LoggingAspect {
 		for (Object temp : arguments) {
 			logger.info("Argument: " + temp);
 		}
+	}
+	
+	@AfterReturning(pointcut="allServices()",returning="result")
+	public void afterReturning(JoinPoint joinPoint, Object result) {
+		
+		String method = joinPoint.getSignature().toShortString();
+		logger.info("@AfterReturning: Method called: " + method);
+		logger.info("Result: " + result);
 	}
 }
